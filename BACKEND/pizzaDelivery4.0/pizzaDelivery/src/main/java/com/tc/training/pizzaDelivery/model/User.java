@@ -17,9 +17,6 @@ public class User {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(nullable = false)
-    private String user_id;
-
     @NotNull
     private String username;
     @NotNull
@@ -29,6 +26,7 @@ public class User {
     private String department;
     private String role;
     private String phoneNumber;
+    private String address;
     private String firebase_id;
 
 }

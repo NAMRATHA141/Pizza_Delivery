@@ -17,8 +17,8 @@ public class Size {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(nullable = false)
-    private String size_id;
+//    @Column(nullable = false)
+//    private String size_id;
 
     private String name;
     private BigDecimal price_adjustment;

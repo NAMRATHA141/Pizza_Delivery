@@ -1,6 +1,7 @@
 package com.tc.training.pizzaDelivery.repository;
 
-import com.tc.training.pizzaDelivery.model.CartItem;
+
+import com.tc.training.pizzaDelivery.model.Order;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
@@ -10,10 +11,7 @@ import java.math.BigDecimal;
 import java.util.List;
 
 @Repository
-public interface CartItemRepository extends JpaRepository<CartItem, Long> {
+public interface OrderRepository extends JpaRepository<Order, Long> {
+    List<Order> findByLocation(String location);
 
-    List<CartItem> findByUser_Id(Long userId);
-
-    @Query("SELECT c.item_price FROM CART_ITEM c WHERE c.id = :id")
-    BigDecimal findPriceById(@Param("id") Long id);
 }

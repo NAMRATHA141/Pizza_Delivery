@@ -19,15 +19,18 @@ public class CartItemServiceImpl implements CartItemService {
     private final SizeRepository sizeRepository;
     private final ToppingsRepository toppingsRepository;
 
+    private final CartItemToppingsRepository cartItemToppingsRepository;
+
 
 
     @Autowired
-    public CartItemServiceImpl(CartItemRepository cartItemRepository, ProductRepository productRepository, CrustRepository crustRepository, SizeRepository sizeRepository, ToppingsRepository toppingsRepository) {
+    public CartItemServiceImpl(CartItemRepository cartItemRepository, ProductRepository productRepository, CrustRepository crustRepository, SizeRepository sizeRepository, ToppingsRepository toppingsRepository, CartItemToppingsRepository cartItemToppingsRepository) {
         this.cartItemRepository = cartItemRepository;
         this.productRepository = productRepository;
         this.crustRepository = crustRepository;
         this.sizeRepository = sizeRepository;
         this.toppingsRepository = toppingsRepository;
+        this.cartItemToppingsRepository = cartItemToppingsRepository;
     }
 
     public List<CartItem> getAllCartItems() {
@@ -41,16 +44,17 @@ public class CartItemServiceImpl implements CartItemService {
     public CartItem saveCartItem(CartItem cartItem) {
         BigDecimal calculatedPrice = calculateCartItemPrice(cartItem);
         cartItem.setItem_price(calculatedPrice);
-        System.out.println("Calculated Price: " + calculatedPrice);
         return cartItemRepository.save(cartItem);
     }
 
     public void deleteCartItem(Long cartItemId) {
+        cartItemToppingsRepository.deleteById(cartItemId);
         cartItemRepository.deleteById(cartItemId);
+
     }
 
     public List<CartItem> getCartItemsByCustomerId(Long user_id) {
-        return cartItemRepository.findByUserId(user_id);
+        return cartItemRepository.findByUser_Id(user_id);
     }
 
     private BigDecimal calculateCartItemPrice(CartItem cartItem) {

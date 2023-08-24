@@ -16,9 +16,9 @@ public class Crust {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-
-    @Column(nullable = false)
-    private String crust_id;
+//
+//    @Column(nullable = false)
+//    private String crust_id;
 
 
     private String name;
