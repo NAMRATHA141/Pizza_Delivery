@@ -12,7 +12,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
-@RequestMapping("/api/owner")
+@RequestMapping("/Owner")
 public class RestaurantOwnerController {
 
     private final MenuService menuService;
@@ -32,7 +32,7 @@ public class RestaurantOwnerController {
     }
 
     // Add a menu item for a specific location
-    @PostMapping("/add-by-location")
+    @PostMapping("/menu/add-by-location")
     public ResponseEntity<Menu> addMenuItemsByLocation(
             @RequestParam String location,
             @RequestBody Menu menu) {
