@@ -4,12 +4,15 @@ import com.tc.training.pizzaDelivery.model.CartItem;
 import com.tc.training.pizzaDelivery.model.Toppings;
 import com.tc.training.pizzaDelivery.repository.*;
 import com.tc.training.pizzaDelivery.service.CartItemService;
+import lombok.AllArgsConstructor;
+import lombok.NoArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.math.BigDecimal;
 import java.util.List;
 
+@AllArgsConstructor
 @Service
 public class CartItemServiceImpl implements CartItemService {
 
@@ -18,20 +21,7 @@ public class CartItemServiceImpl implements CartItemService {
     private final CrustRepository crustRepository;
     private final SizeRepository sizeRepository;
     private final ToppingsRepository toppingsRepository;
-
     private final CartItemToppingsRepository cartItemToppingsRepository;
-
-
-
-    @Autowired
-    public CartItemServiceImpl(CartItemRepository cartItemRepository, ProductRepository productRepository, CrustRepository crustRepository, SizeRepository sizeRepository, ToppingsRepository toppingsRepository, CartItemToppingsRepository cartItemToppingsRepository) {
-        this.cartItemRepository = cartItemRepository;
-        this.productRepository = productRepository;
-        this.crustRepository = crustRepository;
-        this.sizeRepository = sizeRepository;
-        this.toppingsRepository = toppingsRepository;
-        this.cartItemToppingsRepository = cartItemToppingsRepository;
-    }
 
     public List<CartItem> getAllCartItems() {
         return cartItemRepository.findAll();

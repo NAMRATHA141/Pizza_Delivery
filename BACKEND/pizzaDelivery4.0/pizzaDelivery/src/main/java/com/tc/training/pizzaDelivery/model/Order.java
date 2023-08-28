@@ -8,6 +8,8 @@ import jakarta.persistence.*;
 
 import java.math.BigDecimal;
 import java.util.List;
+import java.util.UUID;
+
 @Entity(name = "ORDER_TABLE")
 @Data
 @DynamicInsert
@@ -17,6 +19,8 @@ public class Order {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+//    @Id
+//    private String id = UUID.randomUUID().toString();
 
     @ManyToOne
     @JoinColumn(name = "user_id")

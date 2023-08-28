@@ -6,6 +6,7 @@ import com.tc.training.pizzaDelivery.repository.CartItemRepository;
 import com.tc.training.pizzaDelivery.repository.CartItemToppingsRepository;
 import com.tc.training.pizzaDelivery.repository.OrderRepository;
 import com.tc.training.pizzaDelivery.service.OrderService;
+import lombok.AllArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -13,6 +14,7 @@ import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
 
+@AllArgsConstructor
 @Service
 public class OrderServiceImpl implements OrderService {
 
@@ -21,16 +23,11 @@ public class OrderServiceImpl implements OrderService {
     private final CartItemToppingsRepository cartItemToppingsRepository;
 
 
-    @Autowired
-    public OrderServiceImpl(OrderRepository orderRepository, CartItemRepository cartItemRepository, CartItemToppingsRepository cartItemToppingsRepository) {
-        this.orderRepository = orderRepository;
-        this.cartItemRepository = cartItemRepository;
-
-        this.cartItemToppingsRepository = cartItemToppingsRepository;
-    }
-
     public Order saveOrder(Order order) {
         List<CartItem> cartItems = cartItemRepository.findByUser_Id(order.getUser().getId());
+        if (cartItems == null || cartItems.isEmpty()) {
+            throw new IllegalArgumentException("Cart items are empty or null. Cannot create an order.");
+        }
         BigDecimal calculatedPrice = calculateTotalPrice(order);
         order.setTotalPrice(calculatedPrice);
         order.setCartItems(cartItems);
@@ -65,6 +62,9 @@ public class OrderServiceImpl implements OrderService {
 
     private BigDecimal calculateTotalPrice(Order order) {
         List<CartItem> cartItems = cartItemRepository.findByUser_Id(order.getUser().getId());
+        if (cartItems == null || cartItems.isEmpty()) {
+            throw new IllegalArgumentException("Cart items are empty or null. Cannot calculate total price.");
+        }
         BigDecimal totalPrice = BigDecimal.ZERO;
 
         for (CartItem cartItem : cartItems) {

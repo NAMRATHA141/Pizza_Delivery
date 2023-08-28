@@ -2,31 +2,32 @@ package com.tc.training.pizzaDelivery.model;
 
 import com.tc.training.pizzaDelivery.enums.Role;
 import jakarta.persistence.*;
-import jakarta.validation.constraints.NotNull;
 import lombok.Data;
 import org.hibernate.annotations.DynamicInsert;
 import org.hibernate.annotations.DynamicUpdate;
 
-@Entity(name = "USER")
+import java.util.List;
+
+
+@Entity
 @Data
 @DynamicInsert
 @DynamicUpdate
-public class User {
+public class ApiRole {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    private String name;
+    private Role role;
 
-    @NotNull
-    private String email;
+    @ManyToMany
+    @JoinTable(
+            name = "api_role_mapping",
+            joinColumns = @JoinColumn(name = "api_role_id"),
+            inverseJoinColumns = @JoinColumn(name = "api_id")
+    )
+    private List<ApiEntity> apis;
 
-
-    private String phoneNumber;
-    private String address;
-    private String firebaseId;
-    @Enumerated(EnumType.STRING)
-    public Role role;
 
 }

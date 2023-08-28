@@ -6,6 +6,7 @@ import org.hibernate.annotations.DynamicInsert;
 import org.hibernate.annotations.DynamicUpdate;
 
 import java.math.BigDecimal;
+import java.util.List;
 
 
 @Entity(name = "PRODUCT")
@@ -29,6 +30,14 @@ public class Product {
     private boolean isVeg;
     private boolean isAlcoholic;
     private String image;
+    @ManyToMany
+    @JoinTable(
+            name = "product_toppings",
+            joinColumns = @JoinColumn(name = "product_id"),
+            inverseJoinColumns = @JoinColumn(name = "toppings_id")
+    )
+    private List<Toppings> toppings;
+
 
 
 }

@@ -6,6 +6,7 @@ import com.tc.training.pizzaDelivery.repository.CartItemRepository;
 import com.tc.training.pizzaDelivery.repository.CartItemToppingsRepository;
 import com.tc.training.pizzaDelivery.repository.OrderRepository;
 import com.tc.training.pizzaDelivery.service.OrderService;
+import lombok.AllArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -14,6 +15,8 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
+@AllArgsConstructor
+@CrossOrigin
 @RequestMapping("/api/orders")
 public class OrderController {
 
@@ -22,15 +25,8 @@ public class OrderController {
     private final CartItemRepository cartItemRepository;
 
     private final CartItemToppingsRepository cartItemToppingsRepository;
-    @Autowired
-    public OrderController(OrderService orderService, OrderRepository orderRepository, CartItemRepository cartItemRepository, CartItemToppingsRepository cartItemToppingsRepository) {
-        this.orderService = orderService;
-        this.orderRepository = orderRepository;
-        this.cartItemRepository = cartItemRepository;
-        this.cartItemToppingsRepository = cartItemToppingsRepository;
-    }
 
-    @PostMapping
+    @PostMapping("/order/add")
     public ResponseEntity<Order> createOrder(@RequestBody Order order) {
         List<CartItem> cartItems = cartItemRepository.findByUser_Id(order.getUser().getId());
         Order savedOrder = orderService.saveOrder(order);
@@ -40,18 +36,17 @@ public class OrderController {
         }
         return new ResponseEntity<>(savedOrder, HttpStatus.CREATED);
     }
-
-    @DeleteMapping("/{orderId}")
+    @DeleteMapping("/order/delete/{orderId}")
     public ResponseEntity<Void> deleteOrder(@PathVariable Long orderId) {
         orderService.deleteOrder(orderId);
         return ResponseEntity.noContent().build();
     }
 
-    @GetMapping
-    public ResponseEntity<List<Order>> getAllOrders() {
-        List<Order> orders = orderService.getAllOrders();
-        return ResponseEntity.ok(orders);
-    }
+//    @GetMapping
+//    public ResponseEntity<List<Order>> getAllOrders() {
+//        List<Order> orders = orderService.getAllOrders();
+//        return ResponseEntity.ok(orders);
+//    }
 
     @GetMapping("/by-location")
     public ResponseEntity<List<Order>> getOrdersByLocation(@RequestParam String location) {

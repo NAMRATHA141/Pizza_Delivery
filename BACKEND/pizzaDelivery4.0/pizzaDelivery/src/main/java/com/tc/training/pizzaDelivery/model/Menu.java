@@ -32,7 +32,7 @@ public class Menu {
             joinColumns = @JoinColumn(name = "menu_id"),
             inverseJoinColumns = @JoinColumn(name = "crust_id")
     )
-    private List<Product> crust;
+    private List<Crust> crust;
 
     @ManyToMany
     @JoinTable(
@@ -40,7 +40,7 @@ public class Menu {
             joinColumns = @JoinColumn(name = "menu_id"),
             inverseJoinColumns = @JoinColumn(name = "size_id")
     )
-    private List<Product> size;
+    private List<Size> size;
 
     @ManyToMany
     @JoinTable(
@@ -48,7 +48,7 @@ public class Menu {
             joinColumns = @JoinColumn(name = "menu_id"),
             inverseJoinColumns = @JoinColumn(name = "toppings_id")
     )
-    private List<Product> toppings;
+    private List<Toppings> toppings;
 
 
     private String outletName;

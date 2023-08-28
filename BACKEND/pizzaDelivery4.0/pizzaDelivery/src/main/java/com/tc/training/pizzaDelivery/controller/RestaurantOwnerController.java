@@ -4,25 +4,24 @@ import com.tc.training.pizzaDelivery.model.Menu;
 import com.tc.training.pizzaDelivery.model.Order;
 import com.tc.training.pizzaDelivery.service.MenuService;
 import com.tc.training.pizzaDelivery.service.OrderService;
+import lombok.AllArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
 @RestController
+@AllArgsConstructor
+@CrossOrigin
 @RequestMapping("/owner")
+@PreAuthorize("hasRole('ROLE_OWNER')")
 public class RestaurantOwnerController {
 
     private final MenuService menuService;
     private final OrderService orderService;
-
-    @Autowired
-    public RestaurantOwnerController(MenuService menuService, OrderService orderService) {
-        this.menuService = menuService;
-        this.orderService = orderService;
-    }
 
     // Get all orders by location
     @GetMapping("/orders/by-location")

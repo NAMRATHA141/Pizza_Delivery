@@ -1,7 +1,9 @@
 package com.tc.training.pizzaDelivery.controller;
 
+import com.google.firebase.auth.FirebaseAuthException;
 import com.tc.training.pizzaDelivery.model.User;
 import com.tc.training.pizzaDelivery.service.UserService;
+import lombok.AllArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -11,7 +13,9 @@ import java.util.List;
 
 
 @RestController
-@RequestMapping("/Users")
+@AllArgsConstructor
+@CrossOrigin
+@RequestMapping("api/users")
 public class UserController {
 
     @Autowired
@@ -23,7 +27,7 @@ public class UserController {
     }
 
     @PostMapping
-    public User createUser(@RequestBody User User) {
+    public User createUser(@RequestBody User User) throws FirebaseAuthException {
         return UserService.createUser(User);
     }
 

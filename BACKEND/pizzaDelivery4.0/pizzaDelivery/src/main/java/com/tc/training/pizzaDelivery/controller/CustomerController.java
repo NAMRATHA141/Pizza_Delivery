@@ -7,30 +7,27 @@ import com.tc.training.pizzaDelivery.repository.CartItemRepository;
 import com.tc.training.pizzaDelivery.service.CartItemService;
 import com.tc.training.pizzaDelivery.service.MenuService;
 import com.tc.training.pizzaDelivery.service.OrderService;
+import lombok.AllArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 import java.util.Map;
 
 @RestController
+@AllArgsConstructor
+@CrossOrigin
 @RequestMapping("/customer")
+@PreAuthorize("hasRole('ROLE_CUSTOMER')")
 public class CustomerController {
 
     private final MenuService menuService;
     private final OrderService orderService;
     private final CartItemService cartItemService;
     private final CartItemRepository cartItemRepository;
-
-    @Autowired
-    public CustomerController(MenuService menuService, OrderService orderService, CartItemService cartItemService, CartItemRepository cartItemRepository) {
-        this.menuService = menuService;
-        this.orderService = orderService;
-        this.cartItemService = cartItemService;
-        this.cartItemRepository = cartItemRepository;
-    }
 
     @PostMapping("/menu/by-location")
     public List<Menu> getMenuItemsByLocation(@RequestBody Map<String, String> requestBody) {
