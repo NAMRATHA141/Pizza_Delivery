@@ -1,12 +1,12 @@
 package com.tc.training.pizzaDelivery.config;
 public class UserThreadLocal {
-    private static ThreadLocal<String> userThreadLocal = new ThreadLocal<>();
+    private static ThreadLocal<Long> userThreadLocal = new ThreadLocal<>();
 
-    public static String getUserId() {
+    public static Long getUserId() {
         return userThreadLocal.get();
     }
 
-    public static void setUserId(String userId) {
+    public static void setUserId(Long userId) {
         userThreadLocal.set(userId);
     }
 

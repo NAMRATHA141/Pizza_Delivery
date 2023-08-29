@@ -2,7 +2,7 @@ package com.tc.training.pizzaDelivery.service.Impl;
 
 
 import com.tc.training.pizzaDelivery.model.*;
-import com.tc.training.pizzaDelivery.repository.MenuRepository;
+import com.tc.training.pizzaDelivery.repository.*;
 import com.tc.training.pizzaDelivery.service.MenuService;
 import lombok.AllArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,7 +16,22 @@ import java.util.stream.Collectors;
 public class MenuServiceImpl implements MenuService {
 
     private final MenuRepository menuRepository;
+    private final ProductRepository productRepository;
+    private final CrustRepository crustRepository;
+    private final ToppingsRepository toppingsRepository;
+    private final SizeRepository sizeRepository;
 
+    public List<Product> displayProducts() {return productRepository.findAll();
+    }
+    public List<Crust> displayCrust() {
+        return crustRepository.findAll();
+    }
+    public List<Toppings> displayToppings() {
+        return toppingsRepository.findAll();
+    }
+    public List<Size> displaySize() {
+        return sizeRepository.findAll();
+    }
     public Menu addMenuItem(Menu menu) {
         return menuRepository.save(menu);
     }

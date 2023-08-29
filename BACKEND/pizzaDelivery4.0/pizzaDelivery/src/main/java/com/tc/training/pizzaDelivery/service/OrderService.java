@@ -13,4 +13,5 @@ public interface OrderService {
     List<Order> getAllOrders();
 
     List<Order> getOrdersByUserLocation(String location);
+    List<Order> getOrdersByCustomerId(Long customerId);
 }

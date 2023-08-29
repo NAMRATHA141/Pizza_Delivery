@@ -13,7 +13,6 @@ import com.tc.training.pizzaDelivery.service.UserService;
 import jakarta.persistence.EntityNotFoundException;
 import lombok.AllArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -26,7 +25,6 @@ public class UserServiceImpl implements UserService {
     @Autowired
     private UserRepository userRepository;
     private ApiRoleMappingRepository apiRoleMappingRepository;
-    private PasswordEncoder passwordEncoder;
 
     public List<User> getAllUsers() {
         return userRepository.findAll();

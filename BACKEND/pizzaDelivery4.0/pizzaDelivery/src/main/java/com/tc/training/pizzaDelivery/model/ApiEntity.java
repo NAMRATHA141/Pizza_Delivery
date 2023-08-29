@@ -1,6 +1,7 @@
 package com.tc.training.pizzaDelivery.model;
 
 import jakarta.persistence.*;
+import lombok.AllArgsConstructor;
 import lombok.Data;
 import org.hibernate.annotations.DynamicInsert;
 import org.hibernate.annotations.DynamicUpdate;
@@ -11,6 +12,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 @Data
 @DynamicInsert
 @DynamicUpdate
+@AllArgsConstructor
 public class ApiEntity {
 
     @Id

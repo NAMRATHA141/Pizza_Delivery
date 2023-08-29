@@ -16,13 +16,9 @@ public class User {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-
     private String name;
-
     @NotNull
     private String email;
-
-
     private String phoneNumber;
     private String address;
     private String firebaseId;

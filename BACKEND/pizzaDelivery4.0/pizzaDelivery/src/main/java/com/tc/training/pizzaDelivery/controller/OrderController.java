@@ -53,4 +53,9 @@ public class OrderController {
         List<Order> orders = orderService.getOrdersByUserLocation(location);
         return ResponseEntity.ok(orders);
     }
+    @GetMapping("/by-customer")
+    public ResponseEntity<List<Order>> getOrdersByCustomerId(@RequestParam Long customerId) {
+        List<Order> orders = orderService.getOrdersByCustomerId(customerId);
+        return ResponseEntity.ok(orders);
+    }
 }

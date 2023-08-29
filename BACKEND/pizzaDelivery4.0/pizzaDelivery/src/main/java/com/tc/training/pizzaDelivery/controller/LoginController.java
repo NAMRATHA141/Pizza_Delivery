@@ -15,8 +15,8 @@ import java.util.List;
 @RestController
 @AllArgsConstructor
 @CrossOrigin
-@RequestMapping("api/users")
-public class UserController {
+@RequestMapping("/api/users")
+public class LoginController {
 
     @Autowired
     private UserService UserService;
@@ -26,12 +26,12 @@ public class UserController {
         return UserService.getAllUsers();
     }
 
-    @PostMapping
+    @PostMapping("/signup")
     public User createUser(@RequestBody User User) throws FirebaseAuthException {
         return UserService.createUser(User);
     }
 
-    @GetMapping("/{id}")
+    @GetMapping("/profile/{id}")
     public ResponseEntity<User> getUserById(@PathVariable Long id) {
         User User = UserService.getUserById(id);
         if (User == null) {
@@ -40,12 +40,12 @@ public class UserController {
         return ResponseEntity.ok(User);
     }
 
-    @PutMapping("/{id}")
+    @PutMapping("/profile/{id}")
     public User updateUser(@PathVariable Long id, @RequestBody User updatedUser) {
         return UserService.updateUser(id, updatedUser);
     }
 
-    @DeleteMapping("/{id}")
+    @DeleteMapping("/profile/{id}")
     public ResponseEntity<Void> deleteUser(@PathVariable Long id) {
         UserService.deleteUser(id);
         return ResponseEntity.noContent().build();

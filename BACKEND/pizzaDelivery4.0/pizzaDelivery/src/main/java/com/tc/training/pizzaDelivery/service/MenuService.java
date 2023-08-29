@@ -16,5 +16,8 @@ public interface MenuService {
     List<Size> getSizesByLocation(String location);
     List<Crust> getCrustsByLocation(String location);
     List<Toppings> getToppingsByLocation(String location);
-
+    List<Product> displayProducts();
+    List<Crust> displayCrust();
+    List<Toppings> displayToppings();
+    List<Size> displaySize();
 }

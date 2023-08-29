@@ -59,7 +59,9 @@ public class OrderServiceImpl implements OrderService {
     public List<Order> getOrdersByUserLocation(String location) {
         return orderRepository.findByLocation(location);
     }
-
+    public List<Order> getOrdersByCustomerId(Long customerId) {
+        return orderRepository.findByUser_Id(customerId);
+    }
     private BigDecimal calculateTotalPrice(Order order) {
         List<CartItem> cartItems = cartItemRepository.findByUser_Id(order.getUser().getId());
         if (cartItems == null || cartItems.isEmpty()) {
