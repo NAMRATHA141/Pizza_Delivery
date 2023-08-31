@@ -22,5 +22,7 @@ public interface UserService {
     User getUserById(Long id);
 
     List<ApiEntity> getAccessibleApis(Role role);
+    User getUserByEmail(String email);
+    Long getUserIdByEmail(String email);
 
 }

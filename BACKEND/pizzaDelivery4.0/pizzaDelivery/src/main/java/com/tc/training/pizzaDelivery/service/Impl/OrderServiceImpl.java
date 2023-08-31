@@ -24,13 +24,13 @@ public class OrderServiceImpl implements OrderService {
 
 
     public Order saveOrder(Order order) {
-        List<CartItem> cartItems = cartItemRepository.findByUser_Id(order.getUser().getId());
-        if (cartItems == null || cartItems.isEmpty()) {
-            throw new IllegalArgumentException("Cart items are empty or null. Cannot create an order.");
-        }
-        BigDecimal calculatedPrice = calculateTotalPrice(order);
-        order.setTotalPrice(calculatedPrice);
-        order.setCartItems(cartItems);
+//        List<CartItem> cartItems = cartItemRepository.findByUser_Id(order.getUser().getId());
+//        if (cartItems == null || cartItems.isEmpty()) {
+//            throw new IllegalArgumentException("Cart items are empty or null. Cannot create an order.");
+//        }
+//        BigDecimal calculatedPrice = calculateTotalPrice(order);
+//        order.setTotalPrice(calculatedPrice);
+//        order.setCartItems(cartItems);
         return orderRepository.save(order);
     }
 

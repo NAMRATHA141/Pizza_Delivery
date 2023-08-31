@@ -21,7 +21,9 @@ public class User {
     private String email;
     private String phoneNumber;
     private String address;
+    @NotNull
     private String firebaseId;
+    @NotNull
     @Enumerated(EnumType.STRING)
     public Role role;
 

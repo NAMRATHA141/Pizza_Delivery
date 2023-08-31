@@ -10,7 +10,6 @@ import com.tc.training.pizzaDelivery.model.User;
 import com.tc.training.pizzaDelivery.repository.ApiRoleMappingRepository;
 import com.tc.training.pizzaDelivery.repository.UserRepository;
 import com.tc.training.pizzaDelivery.service.UserService;
-import jakarta.persistence.EntityNotFoundException;
 import lombok.AllArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -36,7 +35,7 @@ public class UserServiceImpl implements UserService {
                     .setDisplayName(user.getName())
                     .setEmail(user.getEmail());
 
-            UserRecord userRecord = FirebaseAuth.getInstance().createUser(request);
+            UserRecord userRecord = FirebaseAuth.getInstance().createUser(request); //creates own firebase id
             user.setFirebaseId(userRecord.getUid());
         }
         return userRepository.save(user);
@@ -55,8 +54,10 @@ public class UserServiceImpl implements UserService {
 
     public User updateUser(Long id, User updatedUser) {
         User existingUser = userRepository.findById(id)
-                .orElseThrow(() -> new EntityNotFoundException("User not found"));
+                .orElseThrow(() -> new IllegalStateException("User not found. Please signup."));
         existingUser.setName(updatedUser.getName());
+        existingUser.setPhoneNumber(updatedUser.getPhoneNumber()); // Update phoneNumber
+        existingUser.setAddress(updatedUser.getAddress());
 
         return userRepository.save(existingUser);
     }
@@ -68,4 +69,20 @@ public class UserServiceImpl implements UserService {
     public User getUserById(Long id) {
         return userRepository.findById(id).orElse(null);
     }
+
+    public User getUserByEmail(String email) {
+        User user = userRepository.findByEmail(email);
+        if (user == null)
+        {
+            return null;
+        }
+        return user;
+    }
+
+    public Long getUserIdByEmail(String email){
+        User user = userRepository.findByEmail(email);
+        return user.getId();
+
+    }
+
 }

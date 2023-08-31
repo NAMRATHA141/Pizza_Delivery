@@ -1,34 +1,26 @@
 package com.tc.training.pizzaDelivery.model;
 
-import jakarta.persistence.Entity;
+import jakarta.persistence.*;
 import lombok.Data;
 import org.hibernate.annotations.DynamicInsert;
 import org.hibernate.annotations.DynamicUpdate;
-import jakarta.persistence.*;
 
 import java.math.BigDecimal;
 import java.util.List;
-import java.util.UUID;
 
-@Entity(name = "ORDER_TABLE")
+@Entity(name = "CHECKOUT")
 @Data
-@DynamicInsert
 @DynamicUpdate
-public class Order {
+@DynamicInsert
+public class Checkout {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-//    @Id
-//    private String id = UUID.randomUUID().toString();
 
     @ManyToOne
     @JoinColumn(name = "user_id")
     private User user;
-
-    @ManyToOne
-    @JoinColumn(name = "deal_id")
-    private Deal deal;
 
     @ManyToMany
     @JoinTable(
@@ -43,5 +35,9 @@ public class Order {
     private BigDecimal subtotal;
 
     private String location;
+
+    @ManyToOne
+    @JoinColumn(name = "deal_id")
+    private Deal deal;
 
 }

@@ -20,10 +20,8 @@ public class MenuController {
     private final MenuService menuService;
 
     @PostMapping("/add-by-location")
-    public ResponseEntity<Menu> addMenuItemsByLocation(
-            @RequestParam String location,
-            @RequestBody Menu menu) {
-        menu.setOutletAddress(location); // Set the location for the menu
+    public ResponseEntity<Menu> addMenuItemsByLocation(@RequestBody Menu menu) {
+        menu.setOutletAddress(menu.getUser().getAddress()); // Set the location for the menu
         Menu addedMenu = menuService.addMenuItem(menu);
         return new ResponseEntity<>(addedMenu, HttpStatus.CREATED);
     }

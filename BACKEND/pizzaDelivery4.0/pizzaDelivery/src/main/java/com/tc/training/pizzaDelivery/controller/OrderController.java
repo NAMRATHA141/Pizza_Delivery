@@ -29,6 +29,7 @@ public class OrderController {
     @PostMapping("/order/add")
     public ResponseEntity<Order> createOrder(@RequestBody Order order) {
         List<CartItem> cartItems = cartItemRepository.findByUser_Id(order.getUser().getId());
+        order.setLocation(order.getUser().getAddress());
         Order savedOrder = orderService.saveOrder(order);
         for (CartItem cartItem : cartItems) {
             cartItem.setUser(null);
@@ -36,11 +37,11 @@ public class OrderController {
         }
         return new ResponseEntity<>(savedOrder, HttpStatus.CREATED);
     }
-    @DeleteMapping("/order/delete/{orderId}")
-    public ResponseEntity<Void> deleteOrder(@PathVariable Long orderId) {
-        orderService.deleteOrder(orderId);
-        return ResponseEntity.noContent().build();
-    }
+//    @DeleteMapping("/order/delete/{orderId}")
+//    public ResponseEntity<Void> deleteOrder(@PathVariable Long orderId) {
+//        orderService.deleteOrder(orderId);
+//        return ResponseEntity.noContent().build();
+//    }
 
 //    @GetMapping
 //    public ResponseEntity<List<Order>> getAllOrders() {
@@ -53,8 +54,8 @@ public class OrderController {
         List<Order> orders = orderService.getOrdersByUserLocation(location);
         return ResponseEntity.ok(orders);
     }
-    @GetMapping("/by-customer")
-    public ResponseEntity<List<Order>> getOrdersByCustomerId(@RequestParam Long customerId) {
+    @GetMapping("/by-customer/{customerId}")
+    public ResponseEntity<List<Order>> getOrdersByCustomerId(@PathVariable Long customerId) {
         List<Order> orders = orderService.getOrdersByCustomerId(customerId);
         return ResponseEntity.ok(orders);
     }

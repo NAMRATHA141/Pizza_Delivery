@@ -1,5 +1,6 @@
 package com.tc.training.pizzaDelivery.service.Impl;
 
+import com.tc.training.pizzaDelivery.enums.DealType;
 import com.tc.training.pizzaDelivery.model.Coupon;
 import com.tc.training.pizzaDelivery.repository.CouponRepository;
 import com.tc.training.pizzaDelivery.service.CouponService;

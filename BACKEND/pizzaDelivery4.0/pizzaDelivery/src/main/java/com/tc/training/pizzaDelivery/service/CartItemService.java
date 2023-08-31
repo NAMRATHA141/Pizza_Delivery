@@ -2,6 +2,7 @@ package com.tc.training.pizzaDelivery.service;
 
 import com.tc.training.pizzaDelivery.model.CartItem;
 
+import java.math.BigDecimal;
 import java.util.List;
 
 public interface CartItemService {
@@ -15,4 +16,5 @@ public interface CartItemService {
     void deleteCartItem(Long cartItemId);
 
     List<CartItem> getCartItemsByCustomerId(Long customerId);
+    BigDecimal calculateCartItemPrice(CartItem cartItem);
 }

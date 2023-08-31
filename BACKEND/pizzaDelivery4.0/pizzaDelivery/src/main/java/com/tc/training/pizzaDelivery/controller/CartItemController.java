@@ -16,7 +16,7 @@ public class CartItemController {
 
     private final CartItemService cartItemService;
 
-    @GetMapping("/customer/{customerId}")
+    @GetMapping("/customer/{customerId}") // for id use path_variable
     public ResponseEntity<List<CartItem>> getCartItemsByCustomerId(@PathVariable Long customerId) {
         List<CartItem> cartItems = cartItemService.getCartItemsByCustomerId(customerId);
         return ResponseEntity.ok(cartItems);

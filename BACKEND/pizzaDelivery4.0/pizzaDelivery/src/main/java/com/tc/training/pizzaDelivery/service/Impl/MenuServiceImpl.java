@@ -20,6 +20,7 @@ public class MenuServiceImpl implements MenuService {
     private final CrustRepository crustRepository;
     private final ToppingsRepository toppingsRepository;
     private final SizeRepository sizeRepository;
+    private final UserRepository userRepository;
 
     public List<Product> displayProducts() {return productRepository.findAll();
     }
@@ -43,7 +44,6 @@ public class MenuServiceImpl implements MenuService {
     public List<Menu> getMenuItemsByLocation(String location) {
         return menuRepository.findByOutletAddress(location);
     }
-
 
     public List<Product> getProductsByLocation(String location) {
         List<Menu> menuItems = menuRepository.findByOutletAddress(location);

@@ -23,7 +23,7 @@ import java.util.Optional;
 
 
 @RequiredArgsConstructor
-@Configuration
+//@Configuration
 public class SecurityFilter extends OncePerRequestFilter {
 
     private final UserRepository userRepository;
