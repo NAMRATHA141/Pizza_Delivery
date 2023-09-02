@@ -9,9 +9,11 @@ import java.util.Optional;
 
 public interface DealService {
     List<Deal> getAllDeals();
-    Optional<Deal> getDealById(Long id);
+    Deal getDealById(Long id);
     Deal createDeal(Deal deal);
     void deleteDeal(Long id);
-//    BigDecimal calculateDiscountedPrice(CartItem cartItem);
+    BigDecimal calculateDiscount(CartItem cartItem, Deal selectedDeal, BigDecimal itemPrice);
+
+    List<Deal> getApplicableDealsForCartItem(Long cartItemId);
 }
 

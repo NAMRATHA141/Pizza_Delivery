@@ -6,13 +6,12 @@ import com.tc.training.pizzaDelivery.repository.DealRepository;
 import com.tc.training.pizzaDelivery.service.CartItemService;
 import com.tc.training.pizzaDelivery.service.DealService;
 import lombok.AllArgsConstructor;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.math.BigDecimal;
-import java.math.RoundingMode;
+import java.util.ArrayList;
 import java.util.List;
-import java.util.Optional;
+
 @AllArgsConstructor
 @Service
 public class DealServiceImpl implements DealService {
@@ -24,28 +23,36 @@ public class DealServiceImpl implements DealService {
         return dealRepository.findAll();
     }
 
-    public Optional<Deal> getDealById(Long id) {
-        return dealRepository.findById(id);
+    public Deal getDealById(Long id) {
+        Deal deal = dealRepository.getDealById(id);
+        if (deal == null) {
+            throw new IllegalStateException("Deal with ID " + id + " not found");
+        }
+        return deal;
     }
 
     public Deal createDeal(Deal deal) {
         return dealRepository.save(deal);
     }
 
-
     public void deleteDeal(Long id) {
         dealRepository.deleteById(id);
     }
 
-    private BigDecimal calculateDiscount(CartItem cartItem, BigDecimal itemPrice) {
+    public BigDecimal calculateDiscount(CartItem cartItem, Deal selectedDeal, BigDecimal itemPrice) {
         BigDecimal totalDiscount = BigDecimal.ZERO;
-        Long id = cartItem.getProduct().getId();
-        List<Deal> applicableDeals = dealRepository.findByEligibleItem_Id(cartItem.getProduct().getId());
-        for (Deal deal : applicableDeals) {
-            BigDecimal discount = calculateDealDiscount(cartItem, deal, itemPrice);
-            totalDiscount = totalDiscount.add(discount);
-        }
+        Long cartItemId = cartItem.getProduct().getId();
+        List<Deal> deals = dealRepository.findByEligibleItem_Id(cartItemId);
 
+        for (Deal deal : deals) {
+            if (deal.getEligibleItem() != null && deal.getEligibleItem().getId().equals(cartItemId)) {
+                if (deal.getId().equals(selectedDeal.getId())) {
+                    BigDecimal discount = calculateDealDiscount(cartItem, deal, itemPrice);
+                    totalDiscount = totalDiscount.add(discount);
+                    break;
+                }
+            }
+        }
         return totalDiscount;
     }
 
@@ -55,7 +62,7 @@ public class DealServiceImpl implements DealService {
         switch (deal.getType()) {
             case BOGO:
                 if (cartItem.getProduct().getId().equals(deal.getEligibleItem().getId())) {
-                           discount = BigDecimal.ZERO;
+                    discount = BigDecimal.valueOf(0.50);
                 }
                 break;
 
@@ -77,5 +84,23 @@ public class DealServiceImpl implements DealService {
         }
 
         return discount;
+    }
+
+    public List<Deal> getApplicableDealsForCartItem(Long cartItemId) {
+        CartItem cartItem = cartItemService.getCartItemById(cartItemId);
+        if (cartItem == null) {
+            throw new IllegalStateException("Cart item with ID " + cartItemId + " not found.");
+        }
+        Long productId = cartItem.getProduct().getId();
+        List<Deal> deals = dealRepository.findByEligibleItem_Id(productId);
+        List<Deal> applicableDeals = new ArrayList<>();
+
+        for (Deal deal : deals) {
+            if (deal.getEligibleItem() != null && deal.getEligibleItem().getId().equals(productId)) {
+                applicableDeals.add(deal);
+            }
+        }
+
+        return applicableDeals;
     }
 }

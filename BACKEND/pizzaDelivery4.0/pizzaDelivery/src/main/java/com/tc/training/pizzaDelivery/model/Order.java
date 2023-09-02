@@ -19,29 +19,34 @@ public class Order {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+    @ManyToOne
+    @JoinColumn(name = "checkout_id")
+    private Checkout checkout;
+
 //    @Id
 //    private String id = UUID.randomUUID().toString();
-
+//
     @ManyToOne
     @JoinColumn(name = "user_id")
     private User user;
-
-    @ManyToOne
-    @JoinColumn(name = "deal_id")
-    private Deal deal;
-
-    @ManyToMany
-    @JoinTable(
-            name = "order_cart",
-            joinColumns = @JoinColumn(name = "order_id"),
-            inverseJoinColumns = @JoinColumn(name = "cart_item_id")
-    )
-    private List<CartItem> cartItems;
-
-    private BigDecimal totalPrice;
-    private BigDecimal discountPrice;
-    private BigDecimal subtotal;
-
+////
+////    @ManyToOne
+////    @JoinColumn(name = "deal_id")
+////    private Deal deal;
+//
+//    @ManyToMany
+//    @JoinTable(
+//            name = "order_cart",
+//            joinColumns = @JoinColumn(name = "order_id"),
+//            inverseJoinColumns = @JoinColumn(name = "cart_item_id")
+//    )
+//    private List<CartItem> cartItems;
+//
+////    private BigDecimal grandtotal;
+////    private BigDecimal discountPrice;
+////    private BigDecimal subtotal;
+//
     private String location;
+    private String outletLocation;
 
 }

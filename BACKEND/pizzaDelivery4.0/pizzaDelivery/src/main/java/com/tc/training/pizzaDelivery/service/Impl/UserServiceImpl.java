@@ -30,7 +30,7 @@ public class UserServiceImpl implements UserService {
     }
 
     public User createUser(User user) throws FirebaseAuthException {
-        if (user.getRole() == Role.ADMIN) {
+        if (user.getRole() == Role.ADMIN || user.getRole() == Role.OWNER) {
             UserRecord.CreateRequest request = new UserRecord.CreateRequest()
                     .setDisplayName(user.getName())
                     .setEmail(user.getEmail());

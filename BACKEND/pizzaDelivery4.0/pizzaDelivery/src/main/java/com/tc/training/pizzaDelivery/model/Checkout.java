@@ -24,17 +24,15 @@ public class Checkout {
 
     @ManyToMany
     @JoinTable(
-            name = "order_cart",
-            joinColumns = @JoinColumn(name = "order_id"),
+            name = "checkout_cart",
+            joinColumns = @JoinColumn(name = "checkout_id"),
             inverseJoinColumns = @JoinColumn(name = "cart_item_id")
     )
     private List<CartItem> cartItems;
 
-    private BigDecimal totalPrice;
+    private BigDecimal grandTotal;
     private BigDecimal discountPrice;
-    private BigDecimal subtotal;
-
-    private String location;
+    private BigDecimal subTotal;
 
     @ManyToOne
     @JoinColumn(name = "deal_id")

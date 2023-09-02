@@ -35,19 +35,19 @@ public class OrderServiceImpl implements OrderService {
     }
 
     public void deleteOrder(Long orderId) {
-        Order order = orderRepository.findById(orderId).orElse(null);
-        if (order != null) {
-            List<CartItem> cartItems = new ArrayList<>(order.getCartItems());
-
-            for (CartItem cartItem : cartItems) {
-                Long cartItemId = cartItem.getId();
-                order.getCartItems().remove(cartItem);
-                cartItemToppingsRepository.deleteById(cartItemId);
-                cartItemRepository.deleteById(cartItemId);
-            }
-
-            orderRepository.delete(order);
-        }
+//        Order order = orderRepository.findById(orderId).orElse(null);
+//        if (order != null) {
+//            List<CartItem> cartItems = new ArrayList<>(order.getCartItems());
+//
+//            for (CartItem cartItem : cartItems) {
+//                Long cartItemId = cartItem.getId();
+//                order.getCartItems().remove(cartItem);
+//                cartItemToppingsRepository.deleteById(cartItemId);
+//                cartItemRepository.deleteById(cartItemId);
+//            }
+//
+//            orderRepository.delete(order);
+//        }
     }
 
 
@@ -62,20 +62,20 @@ public class OrderServiceImpl implements OrderService {
     public List<Order> getOrdersByCustomerId(Long customerId) {
         return orderRepository.findByUser_Id(customerId);
     }
-    private BigDecimal calculateTotalPrice(Order order) {
-        List<CartItem> cartItems = cartItemRepository.findByUser_Id(order.getUser().getId());
-        if (cartItems == null || cartItems.isEmpty()) {
-            throw new IllegalArgumentException("Cart items are empty or null. Cannot calculate total price.");
-        }
-        BigDecimal totalPrice = BigDecimal.ZERO;
-
-        for (CartItem cartItem : cartItems) {
-            BigDecimal itemPrice = cartItemRepository.findPriceById(cartItem.getId());
-            totalPrice = totalPrice.add(itemPrice);
-        }
-
-        return totalPrice;
-    }
+//    private BigDecimal calculateTotalPrice(Order order) {
+//        List<CartItem> cartItems = cartItemRepository.findByUser_Id(order.getUser().getId());
+//        if (cartItems == null || cartItems.isEmpty()) {
+//            throw new IllegalArgumentException("Cart items are empty or null. Cannot calculate total price.");
+//        }
+//        BigDecimal totalPrice = BigDecimal.ZERO;
+//
+//        for (CartItem cartItem : cartItems) {
+//            BigDecimal itemPrice = cartItemRepository.findPriceById(cartItem.getId());
+//            totalPrice = totalPrice.add(itemPrice);
+//        }
+//
+//        return totalPrice;
+//    }
 
 
 }

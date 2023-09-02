@@ -5,6 +5,6 @@ import com.tc.training.pizzaDelivery.model.Checkout;
 public interface CheckoutService {
     Checkout saveCheckout(Checkout checkout);
     void deleteCheckout(Long checkoutId);
-
-
+    Checkout getCheckoutById(long checkoutId);
+    Checkout getCheckoutsByUserId(Long userId);
 }

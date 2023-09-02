@@ -1,18 +1,25 @@
 package com.tc.training.pizzaDelivery.controller;
 
 import com.tc.training.pizzaDelivery.model.CartItem;
+import com.tc.training.pizzaDelivery.model.Checkout;
 import com.tc.training.pizzaDelivery.model.Order;
+import com.tc.training.pizzaDelivery.model.User;
 import com.tc.training.pizzaDelivery.repository.CartItemRepository;
 import com.tc.training.pizzaDelivery.repository.CartItemToppingsRepository;
+import com.tc.training.pizzaDelivery.repository.CheckoutRepository;
 import com.tc.training.pizzaDelivery.repository.OrderRepository;
+import com.tc.training.pizzaDelivery.service.CheckoutService;
 import com.tc.training.pizzaDelivery.service.OrderService;
+import com.tc.training.pizzaDelivery.service.UserService;
 import lombok.AllArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Optional;
 
 @RestController
 @AllArgsConstructor
@@ -21,15 +28,16 @@ import java.util.List;
 public class OrderController {
 
     private final OrderService orderService;
-    private final OrderRepository orderRepository;
     private final CartItemRepository cartItemRepository;
+    private final UserService userService;
 
     private final CartItemToppingsRepository cartItemToppingsRepository;
-
+    @Transactional
     @PostMapping("/order/add")
     public ResponseEntity<Order> createOrder(@RequestBody Order order) {
         List<CartItem> cartItems = cartItemRepository.findByUser_Id(order.getUser().getId());
-        order.setLocation(order.getUser().getAddress());
+        User user = userService.getUserById(order.getUser().getId());
+        order.setLocation(user.getAddress());
         Order savedOrder = orderService.saveOrder(order);
         for (CartItem cartItem : cartItems) {
             cartItem.setUser(null);
@@ -49,9 +57,9 @@ public class OrderController {
 //        return ResponseEntity.ok(orders);
 //    }
 
-    @GetMapping("/by-location")
-    public ResponseEntity<List<Order>> getOrdersByLocation(@RequestParam String location) {
-        List<Order> orders = orderService.getOrdersByUserLocation(location);
+    @GetMapping("/by-outletLocation")
+    public ResponseEntity<List<Order>> getOrdersByLocation(@RequestParam String outletLocation) {
+        List<Order> orders = orderService.getOrdersByUserLocation(outletLocation);
         return ResponseEntity.ok(orders);
     }
     @GetMapping("/by-customer/{customerId}")
