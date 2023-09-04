@@ -1,9 +1,6 @@
 package com.tc.training.pizzaDelivery.controller;
 
-import com.tc.training.pizzaDelivery.model.CartItem;
-import com.tc.training.pizzaDelivery.model.Checkout;
-import com.tc.training.pizzaDelivery.model.Order;
-import com.tc.training.pizzaDelivery.model.User;
+import com.tc.training.pizzaDelivery.model.*;
 import com.tc.training.pizzaDelivery.repository.CartItemRepository;
 import com.tc.training.pizzaDelivery.repository.CartItemToppingsRepository;
 import com.tc.training.pizzaDelivery.repository.CheckoutRepository;
@@ -66,5 +63,12 @@ public class OrderController {
     public ResponseEntity<List<Order>> getOrdersByCustomerId(@PathVariable Long customerId) {
         List<Order> orders = orderService.getOrdersByCustomerId(customerId);
         return ResponseEntity.ok(orders);
+    }
+
+    @GetMapping("/top5selling")
+    public List<Object> getTopSellingProductsByOutletLocation(
+            @RequestParam("outletLocation") String outletLocation
+    ) {
+        return orderService.getTopSellingProductsByOutletLocation(outletLocation);
     }
 }

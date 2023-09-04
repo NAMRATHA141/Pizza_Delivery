@@ -1,6 +1,7 @@
 package com.tc.training.pizzaDelivery.service.Impl;
 
 import com.tc.training.pizzaDelivery.model.CartItem;
+import com.tc.training.pizzaDelivery.model.Product;
 import com.tc.training.pizzaDelivery.model.Toppings;
 import com.tc.training.pizzaDelivery.repository.*;
 import com.tc.training.pizzaDelivery.service.CartItemService;
@@ -12,6 +13,7 @@ import org.springframework.stereotype.Service;
 
 import java.math.BigDecimal;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @AllArgsConstructor
 @Service
@@ -84,6 +86,17 @@ public class CartItemServiceImpl implements CartItemService {
         }
         return toppingsPrice;
     }
+
+//    public List<Product> getTop5ProductsByQuantity() {
+//        List<Object[]> results = cartItemRepository.findTop5ProductsByQuantity();
+//
+//        // Extract the Product entities from the results
+//        List<Product> topProducts = results.stream()
+//                .map(result -> (Product) result[0])
+//                .collect(Collectors.toList());
+//
+//        return topProducts;
+//    }
 }
 
 

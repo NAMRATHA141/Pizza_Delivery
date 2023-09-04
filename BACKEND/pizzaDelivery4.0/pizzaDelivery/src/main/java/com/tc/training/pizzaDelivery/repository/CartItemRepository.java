@@ -13,7 +13,12 @@ import java.util.List;
 public interface CartItemRepository extends JpaRepository<CartItem, Long> {
 
     List<CartItem> findByUser_Id(Long userId);
-
     @Query("SELECT c.item_price FROM CART_ITEM c WHERE c.id = :id")
     BigDecimal findPriceById(@Param("id") Long id);
+//    @Query("SELECT c.product, SUM(c.quantity) AS totalQuantity " +
+//            "FROM CartItem c " +
+//            "GROUP BY c.product " +
+//            "ORDER BY totalQuantity DESC")
+//    List<Object[]> findTop5ProductsByQuantity();
+
 }

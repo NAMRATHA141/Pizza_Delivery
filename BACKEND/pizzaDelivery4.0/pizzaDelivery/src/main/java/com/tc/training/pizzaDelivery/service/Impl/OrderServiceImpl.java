@@ -2,9 +2,11 @@ package com.tc.training.pizzaDelivery.service.Impl;
 
 import com.tc.training.pizzaDelivery.model.CartItem;
 import com.tc.training.pizzaDelivery.model.Order;
+import com.tc.training.pizzaDelivery.model.Product;
 import com.tc.training.pizzaDelivery.repository.CartItemRepository;
 import com.tc.training.pizzaDelivery.repository.CartItemToppingsRepository;
 import com.tc.training.pizzaDelivery.repository.OrderRepository;
+import com.tc.training.pizzaDelivery.repository.ProductRepository;
 import com.tc.training.pizzaDelivery.service.OrderService;
 import lombok.AllArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,6 +23,7 @@ public class OrderServiceImpl implements OrderService {
     private final OrderRepository orderRepository;
     private final CartItemRepository cartItemRepository;
     private final CartItemToppingsRepository cartItemToppingsRepository;
+
 
 
     public Order saveOrder(Order order) {
@@ -61,6 +64,10 @@ public class OrderServiceImpl implements OrderService {
     }
     public List<Order> getOrdersByCustomerId(Long customerId) {
         return orderRepository.findByUser_Id(customerId);
+    }
+
+    public List<Object> getTopSellingProductsByOutletLocation(String outletLocation) {
+        return orderRepository.findTopSellingProductsByOutletLocation(outletLocation);
     }
 //    private BigDecimal calculateTotalPrice(Order order) {
 //        List<CartItem> cartItems = cartItemRepository.findByUser_Id(order.getUser().getId());

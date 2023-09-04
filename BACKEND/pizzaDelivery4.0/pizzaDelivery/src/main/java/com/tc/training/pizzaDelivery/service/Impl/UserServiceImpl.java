@@ -55,7 +55,7 @@ public class UserServiceImpl implements UserService {
     public User updateUser(Long id, User updatedUser) {
         User existingUser = userRepository.findById(id)
                 .orElseThrow(() -> new IllegalStateException("User not found. Please signup."));
-        existingUser.setName(updatedUser.getName());
+//        existingUser.setName(updatedUser.getName());
         existingUser.setPhoneNumber(updatedUser.getPhoneNumber()); // Update phoneNumber
         existingUser.setAddress(updatedUser.getAddress());
 
