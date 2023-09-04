@@ -23,7 +23,7 @@ public class CheckoutServiceImpl implements CheckoutService {
     private final CartItemRepository cartItemRepository;
     private final DealService dealService;
 
-    private static final BigDecimal TAX_RATE = BigDecimal.valueOf(0.5); // 5%
+    private static final BigDecimal TAX_RATE = BigDecimal.valueOf(0.2); // 2%
     private static final BigDecimal DELIVERY_CHARGE = BigDecimal.valueOf(50); // 50 rupees
     @Transactional
     public Checkout saveCheckout(Checkout checkout) {

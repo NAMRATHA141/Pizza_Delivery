@@ -56,8 +56,8 @@ public class OrderServiceImpl implements OrderService {
         return orderRepository.findAll();
     }
 
-    public List<Order> getOrdersByUserLocation(String location) {
-        return orderRepository.findByLocation(location);
+    public List<Order> getOrdersByUserLocation(String outletLocation) {
+        return orderRepository.findByOutletLocation(outletLocation);
     }
     public List<Order> getOrdersByCustomerId(Long customerId) {
         return orderRepository.findByUser_Id(customerId);
