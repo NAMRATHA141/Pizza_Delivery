@@ -1,5 +1,6 @@
 package com.tc.training.pizzaDelivery.service.Impl;
 
+import com.tc.training.pizzaDelivery.enums.OrderStatus;
 import com.tc.training.pizzaDelivery.model.CartItem;
 import com.tc.training.pizzaDelivery.model.Order;
 import com.tc.training.pizzaDelivery.model.Product;
@@ -13,6 +14,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.math.BigDecimal;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -24,36 +26,22 @@ public class OrderServiceImpl implements OrderService {
     private final CartItemRepository cartItemRepository;
     private final CartItemToppingsRepository cartItemToppingsRepository;
 
-
-
     public Order saveOrder(Order order) {
-//        List<CartItem> cartItems = cartItemRepository.findByUser_Id(order.getUser().getId());
-//        if (cartItems == null || cartItems.isEmpty()) {
-//            throw new IllegalArgumentException("Cart items are empty or null. Cannot create an order.");
-//        }
-//        BigDecimal calculatedPrice = calculateTotalPrice(order);
-//        order.setTotalPrice(calculatedPrice);
-//        order.setCartItems(cartItems);
+        order.setTimestamp(LocalDateTime.now());
+        order.setStatus(OrderStatus.PENDING);
         return orderRepository.save(order);
     }
 
-    public void deleteOrder(Long orderId) {
-//        Order order = orderRepository.findById(orderId).orElse(null);
-//        if (order != null) {
-//            List<CartItem> cartItems = new ArrayList<>(order.getCartItems());
-//
-//            for (CartItem cartItem : cartItems) {
-//                Long cartItemId = cartItem.getId();
-//                order.getCartItems().remove(cartItem);
-//                cartItemToppingsRepository.deleteById(cartItemId);
-//                cartItemRepository.deleteById(cartItemId);
-//            }
-//
-//            orderRepository.delete(order);
-//        }
+    public void updateOrderStatus(Long orderId, OrderStatus newStatus) {
+        Order order = orderRepository.findById(orderId).orElse(null);
+        if (order != null) {
+            order.setStatus(newStatus);
+            orderRepository.save(order);
+        } else {
+            throw new RuntimeException("Order with ID " + orderId + " not found.");
+        }
     }
-
-
+    public void deleteOrder(Long orderId) { orderRepository.deleteById(orderId);}
 
     public List<Order> getAllOrders() {
         return orderRepository.findAll();
@@ -66,23 +54,9 @@ public class OrderServiceImpl implements OrderService {
         return orderRepository.findByUser_Id(customerId);
     }
 
-    public List<Object> getTopSellingProductsByOutletLocation(String outletLocation) {
+    public List<Object[]> getTopSellingProductsByOutletLocation(String outletLocation) {
         return orderRepository.findTopSellingProductsByOutletLocation(outletLocation);
     }
-//    private BigDecimal calculateTotalPrice(Order order) {
-//        List<CartItem> cartItems = cartItemRepository.findByUser_Id(order.getUser().getId());
-//        if (cartItems == null || cartItems.isEmpty()) {
-//            throw new IllegalArgumentException("Cart items are empty or null. Cannot calculate total price.");
-//        }
-//        BigDecimal totalPrice = BigDecimal.ZERO;
-//
-//        for (CartItem cartItem : cartItems) {
-//            BigDecimal itemPrice = cartItemRepository.findPriceById(cartItem.getId());
-//            totalPrice = totalPrice.add(itemPrice);
-//        }
-//
-//        return totalPrice;
-//    }
 
 
 }

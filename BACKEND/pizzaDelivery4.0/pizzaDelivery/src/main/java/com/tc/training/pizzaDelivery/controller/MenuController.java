@@ -2,6 +2,7 @@ package com.tc.training.pizzaDelivery.controller;
 
 import com.tc.training.pizzaDelivery.model.*;
 import com.tc.training.pizzaDelivery.service.MenuService;
+import com.tc.training.pizzaDelivery.service.UserService;
 import lombok.AllArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -18,10 +19,11 @@ import java.util.Map;
 public class MenuController {
 
     private final MenuService menuService;
-
+    private final UserService userService;
     @PostMapping("/add-by-location")
     public ResponseEntity<Menu> addMenuItemsByLocation(@RequestBody Menu menu) {
-        menu.setOutletAddress(menu.getUser().getAddress()); // Set the location for the menu
+        User user = userService.getUserById(menu.getUser().getId());
+        menu.setOutletAddress(user.getAddress()); // Set the location for the menu
         Menu addedMenu = menuService.addMenuItem(menu);
         return new ResponseEntity<>(addedMenu, HttpStatus.CREATED);
     }

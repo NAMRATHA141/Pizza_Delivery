@@ -1,5 +1,6 @@
 package com.tc.training.pizzaDelivery.controller;
 
+import com.tc.training.pizzaDelivery.enums.OrderStatus;
 import com.tc.training.pizzaDelivery.model.*;
 import com.tc.training.pizzaDelivery.repository.CartItemRepository;
 import com.tc.training.pizzaDelivery.repository.CartItemToppingsRepository;
@@ -66,9 +67,17 @@ public class OrderController {
     }
 
     @GetMapping("/top5selling")
-    public List<Object> getTopSellingProductsByOutletLocation(
+    public List<Object[]> getTopSellingProductsByOutletLocation(
             @RequestParam("outletLocation") String outletLocation
     ) {
         return orderService.getTopSellingProductsByOutletLocation(outletLocation);
+    }
+
+    @PutMapping("/status/{orderId}")
+    public ResponseEntity<String> updateOrderStatus(
+            @PathVariable Long orderId,
+            @RequestParam OrderStatus newStatus) {
+        orderService.updateOrderStatus(orderId, newStatus);
+        return ResponseEntity.ok("Order status updated successfully.");
     }
 }

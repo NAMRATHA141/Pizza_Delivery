@@ -1,5 +1,6 @@
 package com.tc.training.pizzaDelivery.service;
 
+import com.tc.training.pizzaDelivery.enums.OrderStatus;
 import com.tc.training.pizzaDelivery.model.Order;
 import com.tc.training.pizzaDelivery.model.Product;
 
@@ -12,7 +13,8 @@ public interface OrderService {
     void deleteOrder(Long orderId);
 
     List<Order> getAllOrders();
-    List<Object> getTopSellingProductsByOutletLocation(String outletLocation);
+    List<Object[]> getTopSellingProductsByOutletLocation(String outletLocation);
     List<Order> getOrdersByUserLocation(String location);
     List<Order> getOrdersByCustomerId(Long customerId);
+    void updateOrderStatus(Long orderId, OrderStatus newStatus);
 }

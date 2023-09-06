@@ -1,6 +1,7 @@
 package com.tc.training.pizzaDelivery.model;
 
 import jakarta.persistence.*;
+import jakarta.validation.constraints.NotNull;
 import lombok.Data;
 import org.hibernate.annotations.DynamicInsert;
 import org.hibernate.annotations.DynamicUpdate;
@@ -18,6 +19,7 @@ public class Menu {
 
     private String name;
 
+    @NotNull
     @ManyToOne
     @JoinColumn(name = "user_id")
     private User user;
@@ -54,7 +56,5 @@ public class Menu {
     )
     private List<Toppings> toppings;
 
-
-    private String outletName;
     private String outletAddress;
 }

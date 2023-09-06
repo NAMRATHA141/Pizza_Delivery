@@ -1,5 +1,7 @@
 package com.tc.training.pizzaDelivery.model;
 
+import com.tc.training.pizzaDelivery.enums.DealType;
+import com.tc.training.pizzaDelivery.enums.OrderStatus;
 import jakarta.persistence.Entity;
 import lombok.Data;
 import org.hibernate.annotations.DynamicInsert;
@@ -7,6 +9,7 @@ import org.hibernate.annotations.DynamicUpdate;
 import jakarta.persistence.*;
 
 import java.math.BigDecimal;
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.UUID;
 
@@ -29,24 +32,14 @@ public class Order {
     @ManyToOne
     @JoinColumn(name = "user_id")
     private User user;
-////
-////    @ManyToOne
-////    @JoinColumn(name = "deal_id")
-////    private Deal deal;
-//
-//    @ManyToMany
-//    @JoinTable(
-//            name = "order_cart",
-//            joinColumns = @JoinColumn(name = "order_id"),
-//            inverseJoinColumns = @JoinColumn(name = "cart_item_id")
-//    )
-//    private List<CartItem> cartItems;
-//
-////    private BigDecimal grandtotal;
-////    private BigDecimal discountPrice;
-////    private BigDecimal subtotal;
+
+    @Column(name = "timestamp")
+    LocalDateTime timestamp;
 //
     private String location;
     private String outletLocation;
+
+    @Enumerated(EnumType.STRING)
+    private OrderStatus status;
 
 }
