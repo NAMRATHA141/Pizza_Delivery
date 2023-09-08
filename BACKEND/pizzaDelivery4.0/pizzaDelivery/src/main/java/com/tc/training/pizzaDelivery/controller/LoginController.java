@@ -1,6 +1,7 @@
 package com.tc.training.pizzaDelivery.controller;
 
 import com.google.firebase.auth.FirebaseAuthException;
+import com.tc.training.pizzaDelivery.dto.UserDto;
 import com.tc.training.pizzaDelivery.enums.Role;
 import com.tc.training.pizzaDelivery.model.User;
 import com.tc.training.pizzaDelivery.service.UserService;
@@ -22,7 +23,8 @@ import java.util.Optional;
 public class LoginController {
 
     @Autowired
-    private UserService userService;
+    private final UserService userService;
+    private final UserDto userDto;
 
     @GetMapping
     public List<User> getAllUsers() {
@@ -57,8 +59,14 @@ public class LoginController {
     @PostMapping("/signin")
     public ResponseEntity<Object> getUserRoleByEmail(@RequestBody User user) {
         User user1 = userService.getUserByEmail(user.getEmail());
+//        userDto.setEmail(user1.getEmail());
+//        userDto.setId(user1.getId());
+//        userDto.setName(user1.getName());
+//        userDto.setAddress(user1.getAddress());
+//        userDto.setPhoneNumber(user1.getPhoneNumber());
+
         if (user1.getRole() != null) {
-            return ResponseEntity.ok(user1);
+            return ResponseEntity.ok(userDto);
         }
 
         else {
